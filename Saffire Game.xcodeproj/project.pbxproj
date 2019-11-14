@@ -15,6 +15,7 @@
 		CEC12117237D37CB00368EA0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEC12115237D37CB00368EA0 /* Main.storyboard */; };
 		CEC12119237D37D400368EA0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEC12118237D37D400368EA0 /* Assets.xcassets */; };
 		CEC1211C237D37D400368EA0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEC1211A237D37D400368EA0 /* LaunchScreen.storyboard */; };
+		CEC12124237D3FE000368EA0 /* BackgroundTileSet.sks in Resources */ = {isa = PBXBuildFile; fileRef = CEC12123237D3FE000368EA0 /* BackgroundTileSet.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		CEC12118237D37D400368EA0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CEC1211B237D37D400368EA0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CEC1211D237D37D400368EA0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEC12123237D3FE000368EA0 /* BackgroundTileSet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = BackgroundTileSet.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 				CEC12118237D37D400368EA0 /* Assets.xcassets */,
 				CEC1211A237D37D400368EA0 /* LaunchScreen.storyboard */,
 				CEC1211D237D37D400368EA0 /* Info.plist */,
+				CEC12123237D3FE000368EA0 /* BackgroundTileSet.sks */,
 			);
 			path = "Saffire Game";
 			sourceTree = "<group>";
@@ -131,6 +134,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEC12124237D3FE000368EA0 /* BackgroundTileSet.sks in Resources */,
 				CEC12117237D37CB00368EA0 /* Main.storyboard in Resources */,
 				CEC1210E237D37CB00368EA0 /* GameScene.sks in Resources */,
 				CEC12119237D37D400368EA0 /* Assets.xcassets in Resources */,
