@@ -16,6 +16,7 @@
 		CEC12119237D37D400368EA0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEC12118237D37D400368EA0 /* Assets.xcassets */; };
 		CEC1211C237D37D400368EA0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEC1211A237D37D400368EA0 /* LaunchScreen.storyboard */; };
 		CEC12124237D3FE000368EA0 /* BackgroundTileSet.sks in Resources */ = {isa = PBXBuildFile; fileRef = CEC12123237D3FE000368EA0 /* BackgroundTileSet.sks */; };
+		CEC12128237F3FA600368EA0 /* CoinFall.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC12127237F3FA500368EA0 /* CoinFall.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		CEC1211B237D37D400368EA0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CEC1211D237D37D400368EA0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEC12123237D3FE000368EA0 /* BackgroundTileSet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = BackgroundTileSet.sks; sourceTree = "<group>"; };
+		CEC12127237F3FA500368EA0 /* CoinFall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinFall.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 				CEC1211A237D37D400368EA0 /* LaunchScreen.storyboard */,
 				CEC1211D237D37D400368EA0 /* Info.plist */,
 				CEC12123237D3FE000368EA0 /* BackgroundTileSet.sks */,
+				CEC12127237F3FA500368EA0 /* CoinFall.swift */,
 			);
 			path = "Saffire Game";
 			sourceTree = "<group>";
@@ -151,6 +154,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEC12112237D37CB00368EA0 /* GameScene.swift in Sources */,
+				CEC12128237F3FA600368EA0 /* CoinFall.swift in Sources */,
 				CEC12114237D37CB00368EA0 /* GameViewController.swift in Sources */,
 				CEC1210C237D37CB00368EA0 /* AppDelegate.swift in Sources */,
 			);

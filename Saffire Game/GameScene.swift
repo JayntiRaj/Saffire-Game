@@ -7,44 +7,38 @@
 //
 
 import SpriteKit
-//import GameplayKit
 
 class GameScene: SKScene {
     
-    //private var label : SKLabelNode?
-    //private var spinnyNode : SKShapeNode?
-    
+    //creating pig node
     let pig = SKSpriteNode(color: UIColor.systemPink, size: CGSize(width: 100, height: 100))
     
     override func didMove(to view: SKView) {
         
+        //setting pigs position
         pig.position = CGPoint(x: 0, y: -frame.size.height/2)
         addChild(pig)
         
+        //adding touch action recognizer
         let recognizer = UITapGestureRecognizer(target: self, action: #selector((tap)))
         view.addGestureRecognizer(recognizer)
         
-        /*
-        // Get label node from scene and store it for use later
-        self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
-        if let label = self.label {
-            label.alpha = 0.0
-            label.run(SKAction.fadeIn(withDuration: 2.0))
-        }
+        //creating ground
+        physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: -size.width / 2, y: -size.height/2), to: CGPoint(x: size.width, y: -size.height/2))
+
+        //adding gravity to the world so coins/forks/other objects fall with acceleration
+        physicsWorld.gravity = CGVector(dx: 0, dy: -3.0)
         
-        // Create shape node to use during mouse interaction
-        let w = (self.size.width + self.size.height) * 0.05
-        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
-        
-        if let spinnyNode = self.spinnyNode {
-            spinnyNode.lineWidth = 2.5
+        //creating falling coin nodes to run forever
+        let wait = SKAction.wait(forDuration: 2, withRange: 1)
+        let spawn = SKAction.run {
+            let coinNode = CoinFall(image: SKSpriteNode(color: UIColor.yellow, size: CGSize(width:30, height:30)))
+            self.addChild(coinNode)
             
-            spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
-            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                              SKAction.fadeOut(withDuration: 0.5),
-                                              SKAction.removeFromParent()]))
         }
-         */
+        let sequence = SKAction.sequence([wait, spawn])
+        self.run(SKAction.repeatForever(sequence))
+        
     }
     
     @objc func tap(recognizer: UIGestureRecognizer) {
@@ -55,26 +49,16 @@ class GameScene: SKScene {
             pig.removeAllActions()
         }
         if sceneLocation.x>pig.position.x {
-            let movePigAction = SKAction.move(to: CGPoint(x: frame.size.width/2, y:pig.position.y), duration: 2)
+            let movePigAction = SKAction.move(to: CGPoint(x: frame.size.width/2 - pig.size.width, y:pig.position.y), duration: 2)
             pig.run(movePigAction)
         } else {
-            let movePigAction = SKAction.move(to: CGPoint(x: -frame.size.width/2, y:pig.position.y), duration: 2)
+            let movePigAction = SKAction.move(to: CGPoint(x: -frame.size.width/2 + pig.size.width, y:pig.position.y), duration: 2)
             pig.run(movePigAction)
         }
         
-
-        
-
-        /*let moveByAction = SKAction.moveBy(x:sceneLocation.x - pig.position.x, y: sceneLocation.y - pig.position.y, duration:1)
-        
-        let moveByReversedAction = moveByAction.reversed()
-        let moveByActions = [moveByAction, moveByReversedAction]
-        let moveSequence = SKAction.sequence(moveByActions)
-        
-        //let moveRepeatForeverSequence = SKAction.repeatForever(moveSequence)*/
-        
         
     }
+    
     
     /*
     func touchDown(atPoint pos : CGPoint) {
