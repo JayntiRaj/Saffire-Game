@@ -14,7 +14,15 @@ class GameScene: SKScene {
     //private var label : SKLabelNode?
     //private var spinnyNode : SKShapeNode?
     
+    let pig = SKSpriteNode(color: UIColor.systemPink, size: CGSize(width: 100, height: 100))
+    
     override func didMove(to view: SKView) {
+        
+        pig.position = CGPoint(x: 0, y: -frame.size.height/2)
+        addChild(pig)
+        
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector((tap)))
+        view.addGestureRecognizer(recognizer)
         
         /*
         // Get label node from scene and store it for use later
@@ -39,6 +47,34 @@ class GameScene: SKScene {
          */
     }
     
+    @objc func tap(recognizer: UIGestureRecognizer) {
+        let viewLocation = recognizer.location(in: view)
+        let sceneLocation = convertPoint(fromView: viewLocation)
+        
+        if pig.hasActions() {
+            pig.removeAllActions()
+        }
+        if sceneLocation.x>pig.position.x {
+            let movePigAction = SKAction.move(to: CGPoint(x: frame.size.width/2, y:pig.position.y), duration: 2)
+            pig.run(movePigAction)
+        } else {
+            let movePigAction = SKAction.move(to: CGPoint(x: -frame.size.width/2, y:pig.position.y), duration: 2)
+            pig.run(movePigAction)
+        }
+        
+
+        
+
+        /*let moveByAction = SKAction.moveBy(x:sceneLocation.x - pig.position.x, y: sceneLocation.y - pig.position.y, duration:1)
+        
+        let moveByReversedAction = moveByAction.reversed()
+        let moveByActions = [moveByAction, moveByReversedAction]
+        let moveSequence = SKAction.sequence(moveByActions)
+        
+        //let moveRepeatForeverSequence = SKAction.repeatForever(moveSequence)*/
+        
+        
+    }
     
     /*
     func touchDown(atPoint pos : CGPoint) {
