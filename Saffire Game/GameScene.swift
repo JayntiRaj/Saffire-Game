@@ -8,10 +8,15 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+let coinCategory  : UInt32 = 0x1 << 1
+let groundCategory: UInt32 = 0x1 << 2
+let playerCategory : UInt32 = 0x1 << 3
+
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //creating pig node
     let pig = SKSpriteNode(color: UIColor.systemPink, size: CGSize(width: 100, height: 100))
+    
     
     override func didMove(to view: SKView) {
         
@@ -24,15 +29,24 @@ class GameScene: SKScene {
         view.addGestureRecognizer(recognizer)
         
         //creating ground
-        physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: -size.width / 2, y: -size.height/2), to: CGPoint(x: size.width, y: -size.height/2))
+        //physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: -size.width / 2, y: -size.height/2), to: CGPoint(x: size.width, y: -size.height/2))
+        //physicsBody?.usesPreciseCollisionDetection = true
+        //physicsBody?.categoryBitMask = groundCategory
+        let ground = Ground()
+        addChild(ground)
 
         //adding gravity to the world so coins/forks/other objects fall with acceleration
         physicsWorld.gravity = CGVector(dx: 0, dy: -3.0)
+        
+        //set physics contact delegate
+        physicsWorld.contactDelegate = self
         
         //creating falling coin nodes to run forever
         let wait = SKAction.wait(forDuration: 2, withRange: 1)
         let spawn = SKAction.run {
             let coinNode = CoinFall(image: SKSpriteNode(color: UIColor.yellow, size: CGSize(width:30, height:30)))
+            coinNode.physicsBody?.usesPreciseCollisionDetection = true
+            coinNode.physicsBody?.categoryBitMask = coinCategory
             self.addChild(coinNode)
             
         }
@@ -56,6 +70,13 @@ class GameScene: SKScene {
             pig.run(movePigAction)
         }
         
+        
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        if (contact.bodyA.categoryBitMask == groundCategory) && (contact.bodyB.categoryBitMask == coinCategory) {
+        contact.bodyB.node?.removeFromParent()
+        }
         
     }
     
