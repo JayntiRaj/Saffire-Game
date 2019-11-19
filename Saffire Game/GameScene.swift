@@ -28,7 +28,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         view.addGestureRecognizer(recognizer)
         
         //placing score display
-        scoreNode.position = CGPoint.zero
+        scoreNode.position = CGPoint(x: frame.size.width/2 - 150, y: frame.size.height/2 - 150)
+        scoreNode.fontName = "GillSans-UltraBold"
+        scoreNode.fontSize = 64
+        scoreNode.fontColor = .orange
         addChild(scoreNode)
         
         //creating ground
@@ -91,7 +94,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (contact.bodyA.categoryBitMask == playerCategory) && (contact.bodyB.categoryBitMask == coinCategory) {
             contact.bodyB.node?.removeFromParent()
             score = score+1
-            print(score)
             scoreNode.text = String(score)
         }
         
