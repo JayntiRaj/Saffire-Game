@@ -16,17 +16,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //creating pig node
     let pig = SKSpriteNode(color: UIColor.systemPink, size: CGSize(width: 100, height: 100))
-    
+    var score = 0;
+    var scoreNode = SKLabelNode(text: "0")
     
     override func didMove(to view: SKView) {
         
-        //setting pigs position
-        pig.position = CGPoint(x: 0, y: -frame.size.height/2)
-        addChild(pig)
+       
         
         //adding touch action recognizer
         let recognizer = UITapGestureRecognizer(target: self, action: #selector((tap)))
         view.addGestureRecognizer(recognizer)
+        
+        //placing score display
+        scoreNode.position = CGPoint.zero
+        addChild(scoreNode)
         
         //creating ground
         //physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: -size.width / 2, y: -size.height/2), to: CGPoint(x: size.width, y: -size.height/2))
@@ -34,6 +37,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //physicsBody?.categoryBitMask = groundCategory
         let ground = Ground()
         addChild(ground)
+        
+        //setting pigs position
+        pig.position = CGPoint(x: 0, y: frame.size.height/2 + pig.size.height/2)
+        pig.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: pig.size.width, height: pig.size.height))
+        pig.physicsBody?.categoryBitMask = playerCategory
+        pig.physicsBody?.contactTestBitMask = coinCategory
+        //pig.physicsBody?.collisionBitMask = coinCategory
+        //pig.physicsBody?.usesPreciseCollisionDetection = true
+        addChild(pig)
 
         //adding gravity to the world so coins/forks/other objects fall with acceleration
         physicsWorld.gravity = CGVector(dx: 0, dy: -3.0)
@@ -45,8 +57,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let wait = SKAction.wait(forDuration: 2, withRange: 1)
         let spawn = SKAction.run {
             let coinNode = CoinFall(image: SKSpriteNode(color: UIColor.yellow, size: CGSize(width:30, height:30)))
-            coinNode.physicsBody?.usesPreciseCollisionDetection = true
-            coinNode.physicsBody?.categoryBitMask = coinCategory
             self.addChild(coinNode)
             
         }
@@ -75,7 +85,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func didBegin(_ contact: SKPhysicsContact) {
         if (contact.bodyA.categoryBitMask == groundCategory) && (contact.bodyB.categoryBitMask == coinCategory) {
-        contact.bodyB.node?.removeFromParent()
+            contact.bodyB.node?.removeFromParent()
+        }
+        
+        if (contact.bodyA.categoryBitMask == playerCategory) && (contact.bodyB.categoryBitMask == coinCategory) {
+            contact.bodyB.node?.removeFromParent()
+            score = score+1
+            print(score)
+            scoreNode.text = String(score)
         }
         
     }

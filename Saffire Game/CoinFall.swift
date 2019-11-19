@@ -29,8 +29,8 @@ class CoinFall: SKNode {
         //category bit mask
         //self.physicsBody?.categoryBitMask = PhysicsCategory.coin
         self.physicsBody?.categoryBitMask = coinCategory
-        self.physicsBody?.contactTestBitMask = groundCategory
-        self.physicsBody?.collisionBitMask = playerCategory
+        self.physicsBody?.contactTestBitMask = groundCategory | playerCategory
+        //self.physicsBody?.collisionBitMask = groundCategory
         self.physicsBody?.usesPreciseCollisionDetection = true
                
         //add image passed as parameter to the object
