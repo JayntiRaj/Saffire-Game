@@ -27,7 +27,7 @@ class Ground: SKNode {
         
         //        set the bitmask properties
         self.physicsBody?.categoryBitMask = groundCategory
-        self.physicsBody?.contactTestBitMask = coinCategory
+        self.physicsBody?.contactTestBitMask = coinCategory | forkCategory
         //self.physicsBody?.collisionBitMask = coinCategory
         
         

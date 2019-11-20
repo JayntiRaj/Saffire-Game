@@ -11,13 +11,16 @@ import SpriteKit
 let coinCategory  : UInt32 = 0x1 << 1
 let groundCategory: UInt32 = 0x1 << 2
 let playerCategory : UInt32 = 0x1 << 3
+let forkCategory : UInt32 = 0x1 << 4
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //creating pig node
     let pig = SKSpriteNode(color: UIColor.systemPink, size: CGSize(width: 100, height: 100))
-    var score = 0;
+    var score = 0
     var scoreNode = SKLabelNode(text: "0")
+    var lives = [SKSpriteNode(color: UIColor.systemPink, size: CGSize(width: 30, height: 30)), SKSpriteNode(color: UIColor.systemPink, size: CGSize(width: 30, height: 30)), SKSpriteNode(color: UIColor.systemPink, size: CGSize(width: 30, height: 30))]
+    let gameOverNode = SKLabelNode(text: "Game Over")
     
     override func didMove(to view: SKView) {
         
@@ -34,6 +37,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreNode.fontColor = .orange
         addChild(scoreNode)
         
+        //placing lives
+        lives[0].position = CGPoint(x: -frame.size.width/2 + 100, y: frame.size.height/2 - 100)
+        lives[1].position = CGPoint(x: lives[0].position.x + lives[1].size.width + 10, y: lives[0].position.y)
+        lives[2].position = CGPoint(x: lives[1].position.x + lives[2].size.width + 10, y: lives[1].position.y)
+        for life in lives {
+            addChild(life)
+        }
+        
         //creating ground
         //physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: -size.width / 2, y: -size.height/2), to: CGPoint(x: size.width, y: -size.height/2))
         //physicsBody?.usesPreciseCollisionDetection = true
@@ -45,7 +56,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pig.position = CGPoint(x: 0, y: frame.size.height/2 + pig.size.height/2)
         pig.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: pig.size.width, height: pig.size.height))
         pig.physicsBody?.categoryBitMask = playerCategory
-        pig.physicsBody?.contactTestBitMask = coinCategory
+        pig.physicsBody?.contactTestBitMask = coinCategory | forkCategory
         //pig.physicsBody?.collisionBitMask = coinCategory
         //pig.physicsBody?.usesPreciseCollisionDetection = true
         addChild(pig)
@@ -57,14 +68,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.contactDelegate = self
         
         //creating falling coin nodes to run forever
-        let wait = SKAction.wait(forDuration: 2, withRange: 1)
-        let spawn = SKAction.run {
+        let waitCoins = SKAction.wait(forDuration: 2, withRange: 1)
+        let spawnCoins = SKAction.run {
             let coinNode = CoinFall(image: SKSpriteNode(color: UIColor.yellow, size: CGSize(width:30, height:30)))
+            coinNode.name = "coinNode"
             self.addChild(coinNode)
             
         }
-        let sequence = SKAction.sequence([wait, spawn])
-        self.run(SKAction.repeatForever(sequence))
+        let sequenceCoins = SKAction.sequence([waitCoins, spawnCoins])
+        self.run(SKAction.repeatForever(sequenceCoins))
+        
+        let waitForks = SKAction.wait(forDuration: 4, withRange: 2)
+        let spawnForks = SKAction.run {
+            let forkNode = ForkFall(image: SKSpriteNode(color: UIColor.gray, size: CGSize(width:15, height:40)))
+            forkNode.name = "forkNode"
+            self.addChild(forkNode)
+            
+        }
+        let sequenceForks = SKAction.sequence([waitForks, spawnForks])
+        self.run(SKAction.repeatForever(sequenceForks))
         
     }
     
@@ -91,12 +113,44 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             contact.bodyB.node?.removeFromParent()
         }
         
+        if (contact.bodyA.categoryBitMask == groundCategory) && (contact.bodyB.categoryBitMask == forkCategory) {
+            contact.bodyB.node?.removeFromParent()
+        }
+        
         if (contact.bodyA.categoryBitMask == playerCategory) && (contact.bodyB.categoryBitMask == coinCategory) {
             contact.bodyB.node?.removeFromParent()
             score = score+1
             scoreNode.text = String(score)
         }
         
+        if (contact.bodyA.categoryBitMask == playerCategory) && (contact.bodyB.categoryBitMask == forkCategory) {
+            contact.bodyB.node?.removeFromParent()
+            let life = lives.popLast()
+            life?.removeFromParent()
+            if (lives.count == 0) {
+                gameOver()
+            }
+        }
+        
+        
+    }
+    
+    func gameOver() {
+        self.removeAllActions()
+        for child in self.children{
+
+            if child.name == "coinNode" || child.name == "forkNode" {
+                child.removeFromParent()
+            }
+        }
+        
+        gameOverNode.fontName = "GillSans-UltraBold"
+        gameOverNode.fontSize = 64
+        gameOverNode.fontColor = UIColor.green
+        gameOverNode.position = CGPoint(x: 0, y: frame.size.height/2)
+        gameOverNode.physicsBody = SKPhysicsBody(circleOfRadius: 10)
+        gameOverNode.physicsBody?.restitution = 1
+        addChild(gameOverNode)
     }
     
     
