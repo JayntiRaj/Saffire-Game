@@ -70,7 +70,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //creating falling coin nodes to run forever
         let waitCoins = SKAction.wait(forDuration: 2, withRange: 1)
         let spawnCoins = SKAction.run {
-            let coinNode = CoinFall(image: SKSpriteNode(color: UIColor.yellow, size: CGSize(width:30, height:30)))
+            //let coinNode = CoinFall(image: SKSpriteNode(color: UIColor.yellow, size: CGSize(width:30, height:30)))
+            let coinNode = CoinFall(image: SKSpriteNode(imageNamed: "coin.png"))
             coinNode.name = "coinNode"
             self.addChild(coinNode)
             
