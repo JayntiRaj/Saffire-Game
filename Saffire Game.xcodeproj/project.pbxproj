@@ -18,6 +18,8 @@
 		CEC12124237D3FE000368EA0 /* BackgroundTileSet.sks in Resources */ = {isa = PBXBuildFile; fileRef = CEC12123237D3FE000368EA0 /* BackgroundTileSet.sks */; };
 		CEC12128237F3FA600368EA0 /* CoinFall.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC12127237F3FA500368EA0 /* CoinFall.swift */; };
 		CEC1212A238137CC00368EA0 /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC12129238137CC00368EA0 /* Ground.swift */; };
+		CEC5E1A423965ED2002AFABD /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC5E1A323965ED2002AFABD /* MenuScene.swift */; };
+		CEC5E1A8239723C5002AFABD /* MenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = CEC5E1A7239723C5002AFABD /* MenuScene.sks */; };
 		CECE923023850B3700EE246E /* ForkFall.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECE922F23850B3700EE246E /* ForkFall.swift */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +37,8 @@
 		CEC12123237D3FE000368EA0 /* BackgroundTileSet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = BackgroundTileSet.sks; sourceTree = "<group>"; };
 		CEC12127237F3FA500368EA0 /* CoinFall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinFall.swift; sourceTree = "<group>"; };
 		CEC12129238137CC00368EA0 /* Ground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ground.swift; sourceTree = "<group>"; };
+		CEC5E1A323965ED2002AFABD /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
+		CEC5E1A7239723C5002AFABD /* MenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MenuScene.sks; sourceTree = "<group>"; };
 		CECE922F23850B3700EE246E /* ForkFall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForkFall.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -81,6 +85,8 @@
 				CEC12127237F3FA500368EA0 /* CoinFall.swift */,
 				CEC12129238137CC00368EA0 /* Ground.swift */,
 				CECE922F23850B3700EE246E /* ForkFall.swift */,
+				CEC5E1A323965ED2002AFABD /* MenuScene.swift */,
+				CEC5E1A7239723C5002AFABD /* MenuScene.sks */,
 			);
 			path = "Saffire Game";
 			sourceTree = "<group>";
@@ -149,6 +155,7 @@
 				CEC12119237D37D400368EA0 /* Assets.xcassets in Resources */,
 				CEC1211C237D37D400368EA0 /* LaunchScreen.storyboard in Resources */,
 				CEC12110237D37CB00368EA0 /* Actions.sks in Resources */,
+				CEC5E1A8239723C5002AFABD /* MenuScene.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,6 +169,7 @@
 				CEC12112237D37CB00368EA0 /* GameScene.swift in Sources */,
 				CEC12128237F3FA600368EA0 /* CoinFall.swift in Sources */,
 				CEC12114237D37CB00368EA0 /* GameViewController.swift in Sources */,
+				CEC5E1A423965ED2002AFABD /* MenuScene.swift in Sources */,
 				CEC1210C237D37CB00368EA0 /* AppDelegate.swift in Sources */,
 				CECE923023850B3700EE246E /* ForkFall.swift in Sources */,
 				CEC1212A238137CC00368EA0 /* Ground.swift in Sources */,
