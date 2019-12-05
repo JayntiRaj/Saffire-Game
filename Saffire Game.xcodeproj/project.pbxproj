@@ -21,6 +21,7 @@
 		CEC5E1A423965ED2002AFABD /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC5E1A323965ED2002AFABD /* MenuScene.swift */; };
 		CEC5E1A8239723C5002AFABD /* MenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = CEC5E1A7239723C5002AFABD /* MenuScene.sks */; };
 		CEC5E1AA2397CD8B002AFABD /* PigGround.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC5E1A92397CD8A002AFABD /* PigGround.swift */; };
+		CEC5E1AC2399A25E002AFABD /* BaconFall.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC5E1AB2399A25E002AFABD /* BaconFall.swift */; };
 		CECE923023850B3700EE246E /* ForkFall.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECE922F23850B3700EE246E /* ForkFall.swift */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +42,7 @@
 		CEC5E1A323965ED2002AFABD /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		CEC5E1A7239723C5002AFABD /* MenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MenuScene.sks; sourceTree = "<group>"; };
 		CEC5E1A92397CD8A002AFABD /* PigGround.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PigGround.swift; sourceTree = "<group>"; };
+		CEC5E1AB2399A25E002AFABD /* BaconFall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaconFall.swift; sourceTree = "<group>"; };
 		CECE922F23850B3700EE246E /* ForkFall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForkFall.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -90,6 +92,7 @@
 				CEC5E1A323965ED2002AFABD /* MenuScene.swift */,
 				CEC5E1A7239723C5002AFABD /* MenuScene.sks */,
 				CEC5E1A92397CD8A002AFABD /* PigGround.swift */,
+				CEC5E1AB2399A25E002AFABD /* BaconFall.swift */,
 			);
 			path = "Saffire Game";
 			sourceTree = "<group>";
@@ -172,6 +175,7 @@
 				CEC12112237D37CB00368EA0 /* GameScene.swift in Sources */,
 				CEC5E1AA2397CD8B002AFABD /* PigGround.swift in Sources */,
 				CEC12128237F3FA600368EA0 /* CoinFall.swift in Sources */,
+				CEC5E1AC2399A25E002AFABD /* BaconFall.swift in Sources */,
 				CEC12114237D37CB00368EA0 /* GameViewController.swift in Sources */,
 				CEC5E1A423965ED2002AFABD /* MenuScene.swift in Sources */,
 				CEC1210C237D37CB00368EA0 /* AppDelegate.swift in Sources */,

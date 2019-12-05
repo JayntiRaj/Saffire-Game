@@ -21,6 +21,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var scoreNode = SKLabelNode(text: "0")
     var lives = [SKSpriteNode(imageNamed: "heart.png"), SKSpriteNode(imageNamed: "heart.png"), SKSpriteNode(imageNamed: "heart.png")]
     let gameOverNode = SKLabelNode(text: "Game Over")
+    let winNode = SKLabelNode(text: "Hooray! Hamlet Can Fly")
+    var pigCanFly = false
     
     override func didMove(to view: SKView) {
         
@@ -61,6 +63,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //pig.physicsBody?.collisionBitMask = coinCategory
         //pig.physicsBody?.usesPreciseCollisionDetection = true
         pig.physicsBody?.affectedByGravity = false
+        pig.name = "pigNode"
         addChild(pig)
 
         //adding gravity to the world so coins/forks/other objects fall with acceleration
@@ -81,6 +84,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let sequenceCoins = SKAction.sequence([waitCoins, spawnCoins])
         self.run(SKAction.repeatForever(sequenceCoins))
         
+        //creating falling fork nodes to run forever
         let waitForks = SKAction.wait(forDuration: 4, withRange: 2)
         let spawnForks = SKAction.run {
             let forkNode = ForkFall(image: SKSpriteNode(imageNamed: "fork.png"))
@@ -100,15 +104,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if pig.hasActions() {
             pig.removeAllActions()
         }
-        if sceneLocation.x>pig.position.x {
-            let movePigAction = SKAction.move(to: CGPoint(x: frame.size.width/2 - pig.size.width, y:pig.position.y), duration: 2)
-            pig.run(movePigAction)
-        } else {
-            let movePigAction = SKAction.move(to: CGPoint(x: -frame.size.width/2 + pig.size.width, y:pig.position.y), duration: 2)
+        
+        if (pigCanFly) {
+            let movePigAction = SKAction.move(to: CGPoint(x: sceneLocation.x, y:sceneLocation.y), duration: 2)
             pig.run(movePigAction)
         }
         
-        
+        else {
+            if sceneLocation.x>pig.position.x {
+                let movePigAction = SKAction.move(to: CGPoint(x: frame.size.width/2 - pig.size.width, y:pig.position.y), duration: 2)
+                pig.run(movePigAction)
+            } else {
+                let movePigAction = SKAction.move(to: CGPoint(x: -frame.size.width/2 + pig.size.width, y:pig.position.y), duration: 2)
+                pig.run(movePigAction)
+            }
+
+        }
+                
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -158,9 +170,46 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
+        checkWin()
+        
+    }
+    
+    func checkWin() {
+        //if (pig.position.y > frame.size.height/2 - 100) {
+        if (pig.position.y > 0) {
+            winGame()
+        }
     }
     
     func gameOver() {
+        self.removeAllActions()
+        for child in self.children{
+
+            if child.name == "coinNode" || child.name == "forkNode" || child.name == "pigNode"{
+                child.removeFromParent()
+            }
+        }
+        
+        gameOverNode.fontName = "GillSans-UltraBold"
+        gameOverNode.fontSize = 64
+        gameOverNode.fontColor = UIColor.green
+        gameOverNode.position = CGPoint.zero
+        
+        addChild(gameOverNode)
+        
+        let waitBacon = SKAction.wait(forDuration: 0.1, withRange: 0.5)
+        let spawnBacon = SKAction.run {
+            let baconNode = BaconFall(image: SKSpriteNode(imageNamed: "bacon.png"))
+            baconNode.name = "baconNode"
+            self.addChild(baconNode)
+            
+        }
+        let sequenceBacon = SKAction.sequence([waitBacon, spawnBacon])
+        self.run(SKAction.repeatForever(sequenceBacon))
+    }
+    
+    func winGame() {
+        print("win game")
         self.removeAllActions()
         for child in self.children{
 
@@ -169,13 +218,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-        gameOverNode.fontName = "GillSans-UltraBold"
-        gameOverNode.fontSize = 64
-        gameOverNode.fontColor = UIColor.green
-        gameOverNode.position = CGPoint(x: 0, y: frame.size.height/2)
-        gameOverNode.physicsBody = SKPhysicsBody(circleOfRadius: 10)
-        gameOverNode.physicsBody?.restitution = 1
-        addChild(gameOverNode)
+        winNode.fontName = "GillSans-UltraBold"
+        winNode.fontSize = 40
+        winNode.fontColor = UIColor.purple
+        winNode.position = CGPoint.zero
+        addChild(winNode)
+        
+        pigCanFly = true
+        
     }
     
     
