@@ -16,10 +16,10 @@ let forkCategory : UInt32 = 0x1 << 4
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //creating pig node
-    let pig = SKSpriteNode(color: UIColor.systemPink, size: CGSize(width: 100, height: 100))
+    let pig = SKSpriteNode(imageNamed: "pig.png")
     var score = 0
     var scoreNode = SKLabelNode(text: "0")
-    var lives = [SKSpriteNode(color: UIColor.systemPink, size: CGSize(width: 30, height: 30)), SKSpriteNode(color: UIColor.systemPink, size: CGSize(width: 30, height: 30)), SKSpriteNode(color: UIColor.systemPink, size: CGSize(width: 30, height: 30))]
+    var lives = [SKSpriteNode(imageNamed: "heart.png"), SKSpriteNode(imageNamed: "heart.png"), SKSpriteNode(imageNamed: "heart.png")]
     let gameOverNode = SKLabelNode(text: "Game Over")
     
     override func didMove(to view: SKView) {
@@ -53,12 +53,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(ground)
         
         //setting pigs position
-        pig.position = CGPoint(x: 0, y: frame.size.height/2 + pig.size.height/2)
+        pig.position = CGPoint(x: 0, y: -UIScreen.main.bounds.height/2 + pig.size.height/2)
         pig.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: pig.size.width, height: pig.size.height))
+        //pig.physicsBody = SKPhysicsBody
         pig.physicsBody?.categoryBitMask = playerCategory
         pig.physicsBody?.contactTestBitMask = coinCategory | forkCategory
         //pig.physicsBody?.collisionBitMask = coinCategory
         //pig.physicsBody?.usesPreciseCollisionDetection = true
+        pig.physicsBody?.affectedByGravity = false
         addChild(pig)
 
         //adding gravity to the world so coins/forks/other objects fall with acceleration
@@ -81,7 +83,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let waitForks = SKAction.wait(forDuration: 4, withRange: 2)
         let spawnForks = SKAction.run {
-            let forkNode = ForkFall(image: SKSpriteNode(color: UIColor.gray, size: CGSize(width:15, height:40)))
+            let forkNode = ForkFall(image: SKSpriteNode(imageNamed: "fork.png"))
             forkNode.name = "forkNode"
             self.addChild(forkNode)
             
@@ -121,6 +123,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (contact.bodyA.categoryBitMask == playerCategory) && (contact.bodyB.categoryBitMask == coinCategory) {
             contact.bodyB.node?.removeFromParent()
             score = score+1
+            changePlayerY(up: true)
             scoreNode.text = String(score)
         }
         
@@ -131,8 +134,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if (lives.count == 0) {
                 gameOver()
             }
+            changePlayerY(up: false)
         }
         
+        
+    }
+    
+    func changePlayerY(up: Bool) {
+        
+        pig.removeAllActions()
+        if (up) {
+            print("move pig up")
+            let movePigAction = SKAction.move(to: CGPoint(x: pig.position.x, y:pig.position.y + 100), duration: 0.5)
+            pig.run(movePigAction)
+        } else {
+            let x = -UIScreen.main.bounds.height/2
+            let y = pig.size.height/2
+            let z = CGFloat(100)
+            if (pig.position.y >= x + y + z) {
+                print("move pig down")
+                let movePigAction = SKAction.move(to: CGPoint(x: pig.position.x, y:pig.position.y - 100), duration: 0.5)
+                pig.run(movePigAction)
+            }
+        }
         
     }
     
