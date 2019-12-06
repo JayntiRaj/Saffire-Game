@@ -16,13 +16,16 @@ let forkCategory : UInt32 = 0x1 << 4
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //creating pig node
-    let pig = SKSpriteNode(imageNamed: "pig.png")
+    let pigTexture = SKTexture(imageNamed: "pig.png")
+    let pigFlyingTexture = SKTexture(imageNamed: "flying_pig.png")
+    var pig : SKSpriteNode! = nil
     var score = 0
     var scoreNode = SKLabelNode(text: "0")
     var lives = [SKSpriteNode(imageNamed: "heart.png"), SKSpriteNode(imageNamed: "heart.png"), SKSpriteNode(imageNamed: "heart.png")]
     let gameOverNode = SKLabelNode(text: "Game Over")
     let winNode = SKLabelNode(text: "Hooray! Hamlet Can Fly")
     var pigCanFly = false
+    
     
     override func didMove(to view: SKView) {
         
@@ -55,6 +58,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(ground)
         
         //setting pigs position
+        pig = SKSpriteNode(texture: pigTexture)
         pig.position = CGPoint(x: 0, y: -UIScreen.main.bounds.height/2 + pig.size.height/2)
         pig.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: pig.size.width, height: pig.size.height))
         //pig.physicsBody = SKPhysicsBody
@@ -105,10 +109,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             pig.removeAllActions()
         }
         
-        if (pigCanFly) {
+        
+        if(pigCanFly) {
             let movePigAction = SKAction.move(to: CGPoint(x: sceneLocation.x, y:sceneLocation.y), duration: 2)
             pig.run(movePigAction)
         }
+            
         
         else {
             if sceneLocation.x>pig.position.x {
@@ -156,7 +162,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         pig.removeAllActions()
         if (up) {
-            print("move pig up")
             let movePigAction = SKAction.move(to: CGPoint(x: pig.position.x, y:pig.position.y + 100), duration: 0.5)
             pig.run(movePigAction)
         } else {
@@ -164,7 +169,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let y = pig.size.height/2
             let z = CGFloat(100)
             if (pig.position.y >= x + y + z) {
-                print("move pig down")
                 let movePigAction = SKAction.move(to: CGPoint(x: pig.position.x, y:pig.position.y - 100), duration: 0.5)
                 pig.run(movePigAction)
             }
@@ -206,10 +210,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         let sequenceBacon = SKAction.sequence([waitBacon, spawnBacon])
         self.run(SKAction.repeatForever(sequenceBacon))
+        
     }
     
     func winGame() {
-        print("win game")
         self.removeAllActions()
         for child in self.children{
 
@@ -218,65 +222,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
+        pig.texture = pigFlyingTexture
+        
         winNode.fontName = "GillSans-UltraBold"
         winNode.fontSize = 40
         winNode.fontColor = UIColor.purple
         winNode.position = CGPoint.zero
         addChild(winNode)
         
+
         pigCanFly = true
         
-    }
-    
-    
-    /*
-    func touchDown(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.green
-            self.addChild(n)
-        }
-    }
-    
-    func touchMoved(toPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.blue
-            self.addChild(n)
-        }
-    }
-    
-    func touchUp(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.red
-            self.addChild(n)
-        }
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let label = self.label {
-            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-        }
         
-        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
     
     
-    override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
-    }
-     */
+    
+    
+    
 }
