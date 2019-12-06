@@ -25,11 +25,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let gameOverNode = SKLabelNode(text: "Game Over")
     let winNode = SKLabelNode(text: "Hooray! Hamlet Can Fly")
     var pigCanFly = false
+    let coinSound = SKAction.playSoundFileNamed("coin.wav", waitForCompletion: false)
+    let forkSound = SKAction.playSoundFileNamed("fork.wav", waitForCompletion: false)
+    
+    let backgroundSound:SKAction = SKAction.playSoundFileNamed("backgroundMusic.wav", waitForCompletion: true)
+    
     
     
     override func didMove(to view: SKView) {
         
-       
+        let loopSound:SKAction = SKAction.repeatForever(backgroundSound)
+        run(loopSound)
+        
         
         //adding touch action recognizer
         let recognizer = UITapGestureRecognizer(target: self, action: #selector((tap)))
@@ -140,6 +147,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if (contact.bodyA.categoryBitMask == playerCategory) && (contact.bodyB.categoryBitMask == coinCategory) {
             contact.bodyB.node?.removeFromParent()
+            run(coinSound)
             score = score+1
             changePlayerY(up: true)
             scoreNode.text = String(score)
@@ -147,6 +155,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if (contact.bodyA.categoryBitMask == playerCategory) && (contact.bodyB.categoryBitMask == forkCategory) {
             contact.bodyB.node?.removeFromParent()
+            run(forkSound)
+            
             let life = lives.popLast()
             life?.removeFromParent()
             if (lives.count == 0) {
@@ -179,8 +189,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func checkWin() {
-        //if (pig.position.y > frame.size.height/2 - 100) {
-        if (pig.position.y > 0) {
+        if (pig.position.y > frame.size.height/2 - 100) {
+        //if (pig.position.y > 0) {
             winGame()
         }
     }
